@@ -235,3 +235,104 @@ The first console.log prints undefined because we are extracting the method from
 One way to fix the stoleSecretIdentity() function is as follows:
 var stoleSecretIdentity = hero.getSecretIdentity.bind(hero);
 */
+
+// Immediately Invoked Function Expression - IIFE
+
+// Example 1
+
+var greeting = function(name) {
+  return 'Hello' + name;
+}('John');
+console.log(greeting);
+
+
+// Example 2
+
+var firstname = 'Johann';
+
+(function(name){
+  var greeting = 'Inside IIFE: Hello';
+  console.log(greeting + ' ' + name);
+})(firstname);
+
+// Closures - Closing in all variables a function has available to it
+
+function greet(whattosay) {
+  return function(name){
+    console.log(whattosay + ' ' + name);
+  }
+}
+
+var sayHi = greet('Hi');
+sayHi('Tony');
+
+// Another Example
+
+function buildFunctions() {
+
+  var arr = [];
+
+  for (var i = 0; i < 3; i++) {
+    arr.push(
+      (function(j) {
+        return function() {
+          console.log(j);
+        }
+      }(i))
+    )
+  }
+
+  return arr;
+}
+
+var fs = buildFunctions();
+
+fs[0]();
+fs[1]();
+fs[2]();
+
+// Call, Apply and Bind
+
+// BIND
+
+var person = {
+  firstname: 'John',
+  lastname: 'Doe',
+  getFullName: function() {
+    return this.firstname + ' ' + this.lastname;
+  }
+}
+
+var logName = function(lang1, lang2) {
+  console.log('Logged: ' + this.getFullName());
+  console.log('Arguments: ' + lang1 + lang2);
+  console.log('---------------');
+}
+
+var logPersonName = logName.bind(person);
+
+logPersonName('en');
+
+// CALL
+
+logName.call(person, 'en', 'es');
+
+// APPLY
+
+logName.apply(person, ['en', 'es']);
+
+// Function Borrowing
+
+var person2 = {
+  firstname: 'Jane',
+  lastname: 'Doe'
+}
+
+console.log(person.getFullName.appy(person2));
+
+// Function Currying
+function multiply(a,b) {
+  return a*b;
+}
+
+var multiplyByTwo = multiply.bind(this, 2); 
